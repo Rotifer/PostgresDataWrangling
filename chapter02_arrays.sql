@@ -14,3 +14,25 @@ SELECT
   ARRAY_LENGTH(STRING_TO_ARRAY(data_row, E'\t'), 1)
 FROM
   tab_delimited_file;
+
+/*
+Extract the first two rows as arrays.
+Use the UNNEST function to turn the
+ the array elements into rows.
+*/
+SELECT
+  UNNEST(header_row),
+  UNNEST(sample_data_row)
+FROM
+  (SELECT
+    (SELECT
+      STRING_TO_ARRAY(data_row, E'\t')
+    FROM
+      tab_delimited_file
+    LIMIT 1) header_row,
+    (SELECT
+      STRING_TO_ARRAY(data_row, E'\t')
+    FROM
+      tab_delimited_file
+    LIMIT 1 OFFSET 1)  sample_data_row) sq;
+    
