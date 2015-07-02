@@ -73,5 +73,16 @@ FROM
   WHERE
     data_row NOT LIKE 'Date Added%') sq;
   
-  
+/*
+Summary of SNP IDs per publication.
+*/
+CREATE OR REPLACE VIEW vw_pubmed_snps AS
+SELECT
+  pubmed_id,
+  ARRAY_AGG(snp_ids) list_snp_ids
+FROM
+  data_subset
+GROUP BY
+  pubmed_id;
+
     
