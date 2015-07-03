@@ -85,4 +85,19 @@ FROM
 GROUP BY
   pubmed_id;
 
-    
+/*
+Generate random data for simulation purposes.
+*/
+SELECT
+  GENERATE_SERIES(1,1000) pk_id,
+  (ARRAY_AGG(dates))[ROUND(RANDOM() * 365 + 1)] visit_date,
+  (ARRAY['United States of America', 
+         'United Kingdom', 
+         'Mexico', 
+         'Canada', 
+         'Japan'])[ROUND(RANDOM() * 4 + 1)] country
+FROM
+  (SELECT
+    DATE(GENERATE_SERIES('2014-01-01'::DATE,
+                         '2014-12-31'::DATE,'1 day'))
+                          dates) sq;   
