@@ -1,0 +1,49 @@
+CREATE TABLE purchases(
+  purchase_id TEXT PRIMARY KEY DEFAULT gen_random_uuid(),
+  paid_for_book_cents INTEGER,
+  book_royalty_cents INTEGER,
+  datetime_purchased TIMESTAMP);
+-- Enter some data
+INSERT INTO purchases VALUES ('080f3465-490b-49a5-b5d6-fda3f75d2fcd', 499, 399, '2013-02-06 10:49:00');
+INSERT INTO purchases VALUES ('1b5c0a54-7d27-4f30-8baf-86d1da682d21', 499, 399, '2013-02-08 19:54:00');
+INSERT INTO purchases VALUES ('387ebfa5-f0e2-49fb-bb35-e6a9bbeaa7d3', 499, 399, '2013-02-12 07:32:00');
+INSERT INTO purchases VALUES ('c98481fa-73df-4f70-b569-23074c1dcf26', 499, 399, '2013-03-04 15:43:00');
+INSERT INTO purchases VALUES ('502b3d78-f1cc-42ce-917c-f34a070e165c', 999, 849, '2013-03-06 18:03:00');
+INSERT INTO purchases VALUES ('f5e66d8a-7178-4e7e-b8e8-57ab49b27485', 700, 580, '2013-04-18 08:40:00');
+INSERT INTO purchases VALUES ('eebd203f-89ca-461a-9272-47b6176b6fff', 999, 849, '2013-04-18 15:14:00');
+INSERT INTO purchases VALUES ('ac1b0eca-d379-419e-979e-583847e0906f', 681, 563, '2013-04-18 22:36:00');
+INSERT INTO purchases VALUES ('3137a50f-2762-4e7a-941a-903ae9ec74f0', 999, 849, '2013-04-22 20:17:00');
+INSERT INTO purchases VALUES ('9faadd85-20de-4eea-a34b-03f7ccf0baec', 999, 849, '2013-04-26 13:47:00');
+INSERT INTO purchases VALUES ('506c2263-1f61-4b6b-a019-45adb2afaec3', 499, 399, '2013-05-02 18:17:00');
+INSERT INTO purchases VALUES ('78c42bb3-2b5f-446f-898e-1178211b7eed', 499, 399, '2013-05-03 13:22:00');
+INSERT INTO purchases VALUES ('cf99f6b1-b2e5-496c-aa66-95cb76f41750', 1000, 850, '2013-05-08 20:41:00');
+INSERT INTO purchases VALUES ('45c4d0f8-a17e-44bb-98b4-ff68bdb2a192', 999, 849, '2013-05-22 17:46:00');
+INSERT INTO purchases VALUES ('6afeae1b-9509-49ea-9667-1aeb09392e88', 999, 849, '2013-05-24 12:06:00');
+INSERT INTO purchases VALUES ('e69e5a14-0ad9-4a56-b414-bac46ad8bd70', 999, 849, '2013-05-24 16:12:00');
+INSERT INTO purchases VALUES ('bea8535b-22ea-488f-98b1-d97f5e263fe0', 999, 849, '2013-05-27 10:21:00');
+INSERT INTO purchases VALUES ('0713f47f-039c-4813-9d51-a9503c2c6f7c', 610, 499, '2013-05-28 06:31:00');
+INSERT INTO purchases VALUES ('85a00a5f-200e-4412-9dab-9148f6557ad6', 499, 399, '2013-05-30 08:31:00');
+INSERT INTO purchases VALUES ('017b29f4-527c-4915-8c7a-280f13080973', 499, 399, '2013-06-02 03:04:00');
+INSERT INTO purchases VALUES ('2a2f0378-1f7a-4913-bcd9-6aa00e496ed0', 499, 399, '2013-06-06 19:18:00');
+INSERT INTO purchases VALUES ('cf846491-6982-4b55-ba75-9ad282cd5ed2', 787, 658, '2013-06-10 20:55:00');
+INSERT INTO purchases VALUES ('adb218c6-90b4-4343-89f3-068bc95d1cc6', 499, 399, '2013-06-11 04:59:00');
+INSERT INTO purchases VALUES ('da0c2290-4f4e-46ef-8d9d-094911ed55d2', 999, 849, '2013-06-12 06:15:00');
+INSERT INTO purchases VALUES ('40e3286f-3d08-4943-9375-35fb890ede49', 999, 849, '2013-06-16 10:05:00');
+INSERT INTO purchases VALUES ('994c14fb-f8ce-4400-b4c2-6cea50ed300d', 999, 849, '2013-06-20 06:38:00');
+INSERT INTO purchases VALUES ('ccb2f182-f91a-40bf-8f65-8e6e2597abfe', 499, 399, '2013-06-28 02:15:00');
+INSERT INTO purchases VALUES ('ce83ce22-13f0-4fec-8ae3-aa05b7db560a', 999, 849, '2013-06-28 14:18:00');
+INSERT INTO purchases VALUES ('98cb29d5-a99f-497f-b3bf-b7153b64df80', 499, 399, '2013-06-28 21:18:00');
+INSERT INTO purchases VALUES ('1d2d5989-cd09-47e6-a595-3aa347e0409d', 999, 849, '2013-07-01 04:30:00');
+INSERT INTO purchases VALUES ('c590d462-8ec6-415a-93a5-044fbc1317f1', 999, 849, '2013-07-12 22:00:00');
+INSERT INTO purchases VALUES ('4a835a06-eaf3-49ad-aead-82d904c0311e', 999, 849, '2013-07-25 09:13:00');
+INSERT INTO purchases VALUES ('7885b0e4-2272-47d6-9827-4737830f05da', 999, 849, '2013-07-30 13:35:00');
+INSERT INTO purchases VALUES ('8ada01b0-96ee-4b77-9595-c1b8bc83a31a', 999, 849, '2013-08-01 03:11:00');
+INSERT INTO purchases VALUES ('6f43bfd0-0fb1-4f71-a2ca-70bd3b2ee052', 999, 849, '2013-08-01 09:08:00');
+INSERT INTO purchases VALUES ('ee0ea4ad-1b66-4e6f-82a2-36f7e7165b20', 999, 849, '2013-08-02 10:38:00');
+
+-- LAG function to calculate timne interval between purchases.
+SELECT
+  datetime_purchased,
+  datetime_purchased - LAG(datetime_purchased, 1) OVER(ORDER BY datetime_purchased) interval_since_last_purchase
+FROM
+ purchases;
